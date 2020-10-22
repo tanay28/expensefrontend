@@ -1,0 +1,51 @@
+two-div{
+    padding-left: 0px;
+}
+
+.info{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 8px black;
+}
+
+.chart-heading{
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    width: 280px;
+    height: 30px;
+    padding: 3px; 
+    align-items: center;
+    background: blue;
+    color: white;
+    text-shadow: 1px 1px black; 
+    border-radius: 5px;
+}
+
+.chart-background {
+    width: 100%; 
+    height: 400px; 
+    align-items: center;
+    background: whitesmoke; 
+    border-radius: 5px;
+}
+.chart-background-pie {
+    width: 100%; 
+    height: 300px; 
+    align-items: center;
+    background: whitesmoke; 
+    border-radius: 5px;
+}
+.no-gdata{
+    color: red;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+.acc-close{
+    color : red;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: x-large;
+}

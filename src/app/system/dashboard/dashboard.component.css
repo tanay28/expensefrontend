@@ -1,0 +1,52 @@
+.income{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    color: green;
+    text-shadow: gray;
+}
+
+.expense{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    color: red;
+    text-shadow: gray;
+}
+
+.balance{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: xx-large;
+    color: darkblue;
+    text-shadow: gray;
+}
+.no-ex{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: small;
+    color: forestgreen;
+    font-weight: bold;
+    text-shadow: gray;
+}
+a{
+    cursor: pointer;
+}
+.no-in{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: small;
+    color: maroon;
+    font-weight: bold;
+    text-shadow: gray;
+}
+.no-bal{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: small;
+    color: maroon;
+    font-weight: bold;
+    text-shadow: gray;
+}
+h2{
+    color: indigo;
+}
+td{
+    color: black;
+    text-shadow: 1px 1px whitesmoke;
+    font-weight: bold;
+}

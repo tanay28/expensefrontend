@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" routerLink = "/system/dashboard">Expense Manager</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink = "/system/dashboard" href="#">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink = "/system/addexpense" href="#"> Add Expese<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                    <a class="nav-link" routerLink = "/system/addincome" href="#"> Add Income<span class="sr-only">(current)</span></a>
+                </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/system/viewledger">View Ledger</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/system/statement">Statement</a>
+            </li>
+        </ul>
+        
+        <div class="dropdown show">
+        <span class="custome">Welcome, {{name}}</span>   
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user-circle custom" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <button class="dropdown-item" data-toggle="modal" data-target="#myModal">Change password</button>
+            <button class="dropdown-item" (click)="Onclick()">Sign out</button>
+        </div>
+        </div>
+        
+    </div> 
+</nav>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Change your password</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <span class="err" *ngIf="err">{{msg}}</span>
+          <span class="success" *ngIf="success">{{msg}}</span>
+          <form method="post" [formGroup]="formP" (ngSubmit) = "OnSubmit()">
+              <div class="form-group">
+                <input type="password" formControlName="old" class="form-control" placeholder="Old password" [ngClass]="{ 'is-invalid': submitted && dval.old.errors }">
+              </div>
+              <div class="form-group">
+                <input type="password" formControlName="new" class="form-control" placeholder="New password" [ngClass]="{ 'is-invalid': submitted && dval.new.errors }">
+              </div>
+              <div class="form-group">
+                <input type="password" formControlName="confirm" class="form-control" placeholder="Confirm password" [ngClass]="{ 'is-invalid': submitted && dval.confirm.errors }">
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-info" name="btnSubmit" value="Change">
+                <button type="button" class="btn btn-warning float-right" data-dismiss="modal" (click)="onReset()">Close</button>
+              </div>
+          </form>
+        </div>
+      </div>
+  
+    </div>
+  </div>

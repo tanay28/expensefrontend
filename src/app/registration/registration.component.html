@@ -1,0 +1,67 @@
+<div class="limiter">
+		<div class="container-login100">
+			<div class="custom">
+					Expense Manager
+			</div>
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<form class="login100-form validate-form" [formGroup]="registrtionFrm" (ngSubmit)="onSubmit()">
+                    <span class="login100-form-title p-b-33">Registration</span>
+                    
+					<div class="wrap-input100 validate-input">
+						<input class="input100" type="text" formControlName="firstname" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && fval.firstname.errors }">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+						<div *ngIf="submitted && fval.firstname.errors" class="invalid-feedback">
+							<div *ngIf="fval.firstname.errors.required">
+								First Name is required and must be a valid name
+							</div>
+						</div>
+					</div>
+					<div class="wrap-input100 rs1 validate-input">
+						<input class="input100" type="text" formControlName="lastname" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && fval.lastname.errors }">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+						<div *ngIf="submitted && fval.lastname.errors" class="invalid-feedback">
+							<div *ngIf="fval.lastname.errors.required">
+								Last Name is required and must be a valid name
+							</div>
+						</div>
+                    </div>
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input class="input100" type="email" formControlName="email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && fval.email.errors }" (blur)="onBlur($event)">
+                        <span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+						<div *ngIf="submitted && fval.email.errors" class="invalid-feedback">
+							<div *ngIf="fval.email.errors.required">Email is required</div>
+							<div *ngIf="fval.email.errors.email">Enter a valid email address</div>
+						</div>
+						<div *ngIf ="userExists == true" class="user-error">email address already exists</div>
+                    </div>
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input class="input100" type="password" formControlName="password" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && fval.password.errors }">
+                        <span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+						<div *ngIf="submitted && fval.password.errors" class="invalid-feedback">
+							<div *ngIf="fval.email.errors.required">Email is required</div>
+						</div>
+                    </div>
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input class="input100" type="password" formControlName="repassword" placeholder="Retype Password" [ngClass]="{ 'is-invalid': submitted && fval.repassword.errors }" appConfirmEqualValidator='password'>
+                        <span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+						<div *ngIf="submitted && fval.repassword.errors" class="invalid-feedback">
+							<div *ngIf="fval.repassword.errors.required">Confirm password is required</div>
+							<div *ngIf="fval.repassword.errors?.notEqual">Password Mismatch</div>
+						</div>
+                    </div>
+					<div class="container-login100-form-btn m-t-20">
+						<button class="login100-form-btn">Sign up</button>
+					</div>
+					<div class="text-center">
+						<span class="txt1">Already have an account? </span>
+						<a routerLink="" class="txt2 hov1">Sign in</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

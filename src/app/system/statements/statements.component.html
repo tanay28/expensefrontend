@@ -1,0 +1,267 @@
+<app-navbar></app-navbar>
+<div class="alert alert-info" *ngIf="msg != ''">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	{{msg}}
+</div>
+
+<div class="container mt-3" style="margin-top:30px" id="container">
+    <div class="row" style="margin-top: 30px;">
+        <div class="col">
+            <span class="alert alert-warning" role="alert">
+                <b>Dashboard on :</b> {{monthYear}}
+            </span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col">
+            <h2><b>Summary of expenses</b></h2><br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Visualization type</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" (change)="onVisualChange($event)">
+                    <option selected value="ason">As On</option>
+                    <option value="datewise">Date wise</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-9" *ngIf="datewisev">
+            <form [formGroup]="datedataFormv" class="form-inline" (ngSubmit)="onSubmitVusual()">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="dpf">From</label>&nbsp;
+                        <input class="form-control" readonly
+                        id="dpf" ngbDatepicker #d1="ngbDatepicker" formControlName="dpf" [ngClass]="{ 'is-invalid': submitted && vdval.dpf.errors }" [maxDate]="currentEnd">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="dpt">To</label>&nbsp;
+                        <input class="form-control" readonly
+                        id="dpt" ngbDatepicker #d2="ngbDatepicker" formControlName="dpt" [ngClass]="{ 'is-invalid': submitted && vdval.dpt.errors }" [maxDate]="currentEnd">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+     <!----------------------------- Charts ---------------------------->
+     <div class="row" style="margin-top: 25px;">
+        <div class="col-6" >
+            <div><h5 class="chart-heading">Income Growth</h5></div>
+            <div id="chartdiv_growth_inc" class="chart-background" *ngIf="no_data != true"></div>
+            <div class="chart-background" *ngIf="no_data == true">
+                <p class="no-gdata" align="center">No data found..!!</p>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div><h5 class="chart-heading" >Expense Growth</h5></div>
+            <div id="chartdiv_growth_exp" class="chart-background" *ngIf="no_data != true"></div>
+            <div class="chart-background" *ngIf="no_data == true">
+                <p class="no-gdata" align="center">No data found..!!</p>
+            </div>
+        </div>
+
+        <div class="col-6" style="margin-top: 20px;">
+            <div><h5 class="chart-heading">Expense Vs. Income</h5></div>
+            <div id="chartdiv_exp_vs_inc" class="chart-background-pie" *ngIf="no_data != true"></div>
+            <div class="chart-background" *ngIf="no_data == true">
+                <p class="no-gdata" align="center">No data found..!!</p>
+            </div>
+        </div>
+
+        <div class="col-6" style="margin-top: 20px;">
+            <div><h5 class="chart-heading">Category wise Expenses</h5></div>
+            <div id="chartdiv_exp_catag" class="chart-background-pie" *ngIf="no_data != true"></div>
+            <div class="chart-background" *ngIf="no_data == true">
+                <p class="no-gdata" align="center">No data found..!!</p>
+            </div>
+        </div>     
+    </div>
+    <!------------------------------ END ------------------------------>
+    <hr>
+    
+    <div class="row" style="margin-top: 50px">
+        <!--------------------- Filter condition ------------------------>
+        <div class="col-3" style="width: 100%; height: 80px; align-items: center;">
+            <label><h5 class="chart-heading">Select Type</h5></label><br>
+            <h6>
+                <label class="radio-inline" style="font-weight:bold;color:black;" ><input type="radio" name="optradio" value="dates" (change)="onChange($event)"> Between dates</label>
+                &nbsp;&nbsp;
+                <label class="radio-inline" style="font-weight:bold;color: black;"><input type="radio" name="optradio" value="month" (change)="onChange($event)"> Monthly</label>
+            </h6>
+        </div>
+        <!--------------------------- END ------------------------------>
+
+        <!------------------ Month data ---------------------------->
+        <div class="col-7" *ngIf="type == 'month'">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()" class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="month">Month</label>&nbsp;
+                        <select id="month" formControlName="month" class="form-control" style="width: 200px!important;" [ngClass]="{ 'is-invalid': submitted && dval.month.errors }">
+                            <option *ngFor="let month of months" value="{{month}}">{{month}}</option>
+                        </select>&nbsp;
+                    </div>
+                    <div class="input-group">
+                        <label for="year">Year</label>&nbsp;
+                        <select id="year" formControlName="year" class="form-control" style="width: 200px!important;" [ngClass]="{ 'is-invalid': submitted && dval.year.errors }">
+                            <option *ngFor="let year of years" value="{{year}}">{{year}}</option>
+                        </select>&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        <!---------------------- END ------------------------------->
+        
+        <!------------------ Date wise data ------------------------->
+        <div class="col-8" *ngIf="type == 'dates'">
+            <form [formGroup]="datedataForm" class="form-inline" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="dpf">From</label>&nbsp;
+                        <input class="form-control" readonly
+                        id="dpf" ngbDatepicker #d1="ngbDatepicker" formControlName="dpf" [ngModel]="month" [ngClass]="{ 'is-invalid': submitted && ddval.dpf.errors }" [maxDate]="currentEnd">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="dpt">To</label>&nbsp;
+                        <input class="form-control" readonly
+                        id="dpt" ngbDatepicker #d2="ngbDatepicker" formControlName="dpt" [ngModel]="month" [ngClass]="{ 'is-invalid': submitted && ddval.dpt.errors }" [maxDate]="currentEnd">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+                &nbsp;
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+         <!---------------------- END ------------------------------->
+    </div>
+
+    <!---------------------- Date wise data tab------------------------>
+    <div class="row" *ngIf="datas!=''">
+        <div class="col-6" style="padding-right: 0px;">
+            <table class="table table-responsive-lg" style="text-align: center;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Income from</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-secondary" *ngFor="let data of datas.inc; let i = index">
+                        <td >{{i+1}}</td>
+                        <td>{{data.source}}</td>
+                        <td>{{data.amount}}</td>
+                    </tr>
+                    <tr *ngIf="total_income!=0" class="bg-info">
+                        <td colspan="4" align="right" class="info">
+                            Total Income : {{total_income}}
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6" style="padding-left: 0px;">
+            <table class="table table-responsive-lg" style="text-align: center;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Expense for</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-secondary" *ngFor="let dt of datas.exp; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{dt.name}}</td>
+                        <td>{{dt.type}}</td>
+                        <td>{{dt.amount}}</td>
+                    </tr>
+                    <tr *ngIf="total_expense!=0" class="bg-danger">
+                        <td colspan="4" align="right" class="info">
+                            Total Expense : {{total_expense}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="total_expense!=0 && total_income!=0" class="bg-success">
+                        <td colspan="4" align="right" class="info">
+                            Total Savings : <i>{{total_income - total_expense}}</i>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <!----------------------------- END ------------------------------->
+    <!-- <div class="row" *ngIf="datas!=''">
+        <div class="col">
+            <button class="btn btn-info" style="float: right;" (click)="closeAcc()" *ngIf="is_account_closed == false">Close account</button>
+        </div>
+    </div> -->
+    <!--------------------- No data tab------------------------>
+    <div class="row" *ngIf="no_data_st == true">
+        <div class="col-12">
+            <table class="table table-responsive-lg" style="text-align: center;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Income from</th>
+                        <th>Amount</th>
+                        <th>#</th>
+                        <th>Expense for</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-secondary">
+                        <td colspan="6" align="center">No data found</td>                        
+                    </tr>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!----------------------------- END ------------------------------->
+    <!-- <div class="row">
+        <div class="col">
+            <p align="center" *ngIf="is_account_closed == true" class="acc-close">Account has been closed..</p>
+        </div>
+    </div> -->
+</div>
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Please Wait. </p>  
+</ngx-spinner>

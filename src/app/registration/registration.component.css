@@ -1,0 +1,18 @@
+.user-error{
+    color: red;
+    font-size: 12px;
+    display: block;
+}
+.custom{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 100px;
+    color: blue;
+    font-style: normal;
+    font-stretch: ultra-expanded;
+    font-size: -webkit-xxx-large;
+    text-transform: capitalize;
+    text-shadow: 3px 2px gray;
+}
+.container-login100{
+    background-image: url('../../assets/images/bg1.jpg');
+}

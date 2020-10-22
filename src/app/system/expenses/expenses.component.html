@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container" style="margin-top:30px">
+    <div class="row">
+        <div class="col">
+            <span class="alert alert-warning" role="alert">
+                <b>Dashboard on :</b> {{monthYear}}
+            </span>
+        </div>
+    </div>
+    <div class="row" style="margin-top:30px">
+        <div class="col-6">
+            <h2><b>Add Expense</b></h2>
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name" style="color: coral;font-weight: 900;">What for</label>
+                    <input type="text" class="form-control" id="name" formControlName="name" [ngClass]="{ 'is-invalid': submitted && dval.name.errors }">
+                    <div *ngIf="submitted && dval.name.errors" class="invalid-feedback">
+                        <div *ngIf="dval.name.errors.required">
+                           This is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="type" style="color: coral;font-weight: 900;">Type</label>
+                    <select class="form-control" id="type" (change)="Onchange($event.target.value)" formControlName="type" [ngClass]="{ 'is-invalid': submitted && dval.type.errors }">
+                        <option hidden value="" disabled selected>Select one type</option>
+                        <option *ngFor="let t of types" [value]="t">{{t}}</option>
+                    </select>
+                    <div *ngIf="submitted && dval.type.errors" class="invalid-feedback">
+                        <div *ngIf="dval.type.errors.required">
+                            Please select a type
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="customflag == true">
+                    <input type="text" class="form-control" id="customtype" placeholder="Enter custom type here" formControlName="customtype" [ngClass]="{ 'is-invalid': submitted && dval.customtype.errors }">
+                    <div *ngIf="submitted" class="invalid-feedback">
+                        <div *ngIf="customflagErr==true">
+                                Please enter a custom type
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="amount" style="color: coral;font-weight: 900;">Amount</label>
+                    <input type="text" class="form-control" id="amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && dval.amount.errors }">
+                    <div *ngIf="submitted && dval.amount.errors" class="invalid-feedback">
+                        <div *ngIf="dval.amount.errors.required">
+                            Amount is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="dp" style="color: coral;font-weight: 900;">Select Date</label><br>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        id="dp" ngbDatepicker #d="ngbDatepicker" formControlName="dp" [minDate]= currentStart [maxDate]="currentEnd" [ngClass]="{ 'is-invalid': submitted && dval.dp.errors }">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </div>
+                        <div *ngIf="submitted && dval.dp.errors" class="invalid-feedback">
+                            <div *ngIf="dval.dp.errors.required">
+                                Date is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="place" style="color: coral;font-weight: 900;">Place</label>
+                    <input type="text" class="form-control" id="place" formControlName="place" [ngClass]="{ 'is-invalid': submitted && dval.place.errors }">
+                    <div *ngIf="submitted && dval.place.errors" class="invalid-feedback">
+                        <div *ngIf="dval.place.errors.required">
+                            Place is required
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" *ngIf="is_account_closed == false">Submit</button>
+                <span *ngIf="is_account_closed == true" class="alert alert-danger"><b>Account has been closed..!!</b></span>
+            </form>
+        </div>
+    </div>
+</div>

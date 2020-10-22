@@ -1,0 +1,19 @@
+.custom{
+    color: white;
+    padding: 6px;
+}
+
+.custome{
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.err{
+    font-family: initial;
+    color: red;
+}
+.success{
+    font-family: initial;
+    color: green;
+}
